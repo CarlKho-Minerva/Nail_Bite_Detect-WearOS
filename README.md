@@ -1,6 +1,6 @@
-# My Wear App
+# Nail Bite Detector
 
-My Wear App is an Android Wear application that uses the accelerometer to detect specific movements and prompts the user to confirm if they bit their nail.
+Nail Bite Detector is an Android Wear application that uses the accelerometer to detect specific movements and prompts the user to confirm if they bit their nail.
 
 ## Features
 
@@ -19,8 +19,8 @@ The app requires the following permissions:
 ## How to Change the App Name in Android Studio
 
 1. Open the `res/values/strings.xml` file.
-2. Locate the `<string name="app_name">My Wear App</string>` element.
-3. Change the value `My Wear App` to your desired app name.
+2. Locate the `<string name="app_name">Nail Bite Detector</string>` element.
+3. Change the value `Nail Bite Detector` to your desired app name.
 4. Update the `android:label` attribute in the `AndroidManifest.xml` file if necessary.
 
 ### Example
