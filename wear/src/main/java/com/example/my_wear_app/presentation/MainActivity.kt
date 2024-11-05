@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import android.widget.TextView
+import android.view.Gravity
 
 class MainActivity : ComponentActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         // Create a simple TextView to show accelerometer data
         textView = TextView(this)
         textView.text = "Waiting for movement..."
+        textView.gravity = Gravity.CENTER
         setContentView(textView)
 
         // Initialize sensor manager and accelerometer
