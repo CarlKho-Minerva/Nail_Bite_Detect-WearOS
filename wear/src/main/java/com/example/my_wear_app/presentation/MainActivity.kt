@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import android.widget.TextView
+import android.widget.Button
+import android.widget.LinearLayout
 import android.view.Gravity
 import android.os.PowerManager
 import android.view.WindowManager
@@ -26,6 +28,8 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     private var isTracking = false
     private val THRESHOLD_X = 7f
     private val DURATION_THRESHOLD = 3000 // 3 seconds in milliseconds
+    private lateinit var yesButton: Button
+    private lateinit var noButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +49,40 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         textView = TextView(this)
         textView.text = "Waiting for movement..."
         textView.gravity = Gravity.CENTER
-        setContentView(textView)
+
+        // Create buttons for user response
+        yesButton = Button(this).apply {
+            text = "✔"
+            visibility = Button.GONE
+            setOnClickListener {
+                textView.text = "Nail bite detected!"
+                // Handle nail bite detection
+                this.visibility = Button.GONE
+                noButton.visibility = Button.GONE
+            }
+        }
+
+        noButton = Button(this).apply {
+            text = "✘"
+            visibility = Button.GONE
+            setOnClickListener {
+                textView.text = "False alarm!"
+                // Handle false alarm
+                this.visibility = Button.GONE
+                yesButton.visibility = Button.GONE
+            }
+        }
+
+        // Create a layout to hold the TextView and buttons
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            addView(textView)
+            addView(yesButton)
+            addView(noButton)
+        }
+
+        setContentView(layout)
 
         // Initialize sensor manager and accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -96,6 +133,9 @@ class MainActivity : ComponentActivity(), SensorEventListener {
                     if (elapsedTime >= DURATION_THRESHOLD) {
                         vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
                         isTracking = false // Reset tracking after vibration
+                        textView.text = "Did you bite your nail?"
+                        yesButton.visibility = Button.VISIBLE
+                        noButton.visibility = Button.VISIBLE
                     }
                 }
             } else {
