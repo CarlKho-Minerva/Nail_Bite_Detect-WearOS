@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var textView: TextView
-    private lateinit var wakeLock: PowerManager.WakeLock
+    private lateinit var wakeLock: PowerManager.WakeLock // Fixes the "punch bug"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
