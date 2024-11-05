@@ -9,14 +9,29 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import android.widget.TextView
 import android.view.Gravity
+import android.os.PowerManager
+import android.view.WindowManager
+import android.content.Context
 
 class MainActivity : ComponentActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var textView: TextView
+    private lateinit var wakeLock: PowerManager.WakeLock
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Keep screen on
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        // Initialize wake lock
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "MyWearApp::AccelerometerWakeLock"
+        )
+        wakeLock.acquire()
 
         // Create a simple TextView to show accelerometer data
         textView = TextView(this)
@@ -35,6 +50,9 @@ class MainActivity : ComponentActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        if (!wakeLock.isHeld) {
+            wakeLock.acquire()
+        }
         accelerometer?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
@@ -42,6 +60,9 @@ class MainActivity : ComponentActivity(), SensorEventListener {
 
     override fun onPause() {
         super.onPause()
+        if (wakeLock.isHeld) {
+            wakeLock.release()
+        }
         sensorManager.unregisterListener(this)
     }
 
