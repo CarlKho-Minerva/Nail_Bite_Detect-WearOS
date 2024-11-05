@@ -12,12 +12,20 @@ import android.view.Gravity
 import android.os.PowerManager
 import android.view.WindowManager
 import android.content.Context
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 
 class MainActivity : ComponentActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var textView: TextView
     private lateinit var wakeLock: PowerManager.WakeLock // Fixes the "punch bug"
+    private lateinit var vibrator: Vibrator
+    private var startTime: Long = 0
+    private var isTracking = false
+    private val THRESHOLD_X = 7f
+    private val DURATION_THRESHOLD = 3000 // 3 seconds in milliseconds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +54,10 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         if (accelerometer == null) {
             textView.text = "No accelerometer found!"
         }
+
+        // Initialize vibrator
+        val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibrator = vibratorManager.defaultVibrator
     }
 
     override fun onResume() {
@@ -74,6 +86,21 @@ class MainActivity : ComponentActivity(), SensorEventListener {
 
             textView.text = "X: $x\nY: $y\nZ: $z"
             Log.d("WearApp", "X: $x, Y: $y, Z: $z")
+
+            if (x > THRESHOLD_X) {
+                if (!isTracking) {
+                    startTime = System.currentTimeMillis()
+                    isTracking = true
+                } else {
+                    val elapsedTime = System.currentTimeMillis() - startTime
+                    if (elapsedTime >= DURATION_THRESHOLD) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+                        isTracking = false // Reset tracking after vibration
+                    }
+                }
+            } else {
+                isTracking = false // Reset tracking when X goes below threshold
+            }
         }
     }
 
