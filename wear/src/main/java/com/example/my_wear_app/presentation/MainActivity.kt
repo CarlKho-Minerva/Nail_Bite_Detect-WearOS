@@ -47,17 +47,26 @@ class MainActivity : ComponentActivity() {
 
         // Create a simple TextView to show the main message
         val mainTextView = TextView(this).apply {
-            text = "You are doing a great job, don't bite your nails."
+            text = "Great job, don't bite your nails."
             gravity = Gravity.CENTER
             textSize = 14f // Smaller font size
+            setPadding(0, 0, 0, 20) // Add some margin below the text
         }
 
-        // Create a smaller, circular button to access the detailed accelerometer data screen
+        // Create a smaller, circular button with an icon to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
-            text = "Show Details"
-            setBackgroundResource(android.R.drawable.btn_default_small)
+            setBackgroundResource(android.R.drawable.ic_menu_info_details) // Use an icon
+            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
             setOnClickListener {
                 showDetailScreen()
+            }
+            // Make the button circular
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(0, 20, 0, 0) // Add some margin above the button
             }
         }
 
@@ -108,12 +117,20 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Create a button to go back to the main view
+        // Create a button to go back to the main view with an arrow icon
         val backButton = Button(this).apply {
-            text = "Back"
-            setBackgroundResource(android.R.drawable.btn_default_small)
+            setBackgroundResource(android.R.drawable.ic_media_previous) // Use an arrow icon
+            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
             setOnClickListener {
                 showMainScreen()
+            }
+            // Make the button circular
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(0, 20, 0, 0) // Add some margin above the button
             }
         }
 
@@ -181,17 +198,26 @@ class MainActivity : ComponentActivity() {
     private fun showMainScreen() {
         // Create a simple TextView to show the main message
         val mainTextView = TextView(this).apply {
-            text = "You are doing a great job, don't bite your nails."
+            text = "Great job, don't bite your nails."
             gravity = Gravity.CENTER
             textSize = 14f // Smaller font size
+            setPadding(0, 0, 0, 20) // Add some margin below the text
         }
 
-        // Create a smaller, circular button to access the detailed accelerometer data screen
+        // Create a smaller, circular button with an icon to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
-            text = "Show Details"
-            setBackgroundResource(android.R.drawable.btn_default_small)
+            setBackgroundResource(android.R.drawable.ic_menu_info_details) // Use an icon
+            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
             setOnClickListener {
                 showDetailScreen()
+            }
+            // Make the button circular
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(0, 20, 0, 0) // Add some margin above the button
             }
         }
 
