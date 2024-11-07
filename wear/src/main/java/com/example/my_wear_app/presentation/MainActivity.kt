@@ -97,47 +97,6 @@ class MainActivity : ComponentActivity() {
             gravity = Gravity.CENTER
         }
 
-        // Create buttons for user response
-        yesButton = Button(this).apply {
-            text = "✔"
-            visibility = Button.GONE
-            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
-            setTextColor(android.graphics.Color.WHITE) // White text color
-            setOnClickListener {
-                textView.text = "Nail bite detected!"
-                this.visibility = Button.GONE
-                noButton.visibility = Button.GONE
-            }
-            // Make the button small and adjust margin
-            layoutParams = LinearLayout.LayoutParams(
-                100, // Width
-                100  // Height
-            ).apply {
-                gravity = Gravity.CENTER
-                setMargins(0, 40, 0, 20) // Add some margin above and below the button
-            }
-        }
-
-        noButton = Button(this).apply {
-            text = "✘"
-            visibility = Button.GONE
-            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
-            setTextColor(android.graphics.Color.WHITE) // White text color
-            setOnClickListener {
-                textView.text = "False alarm!"
-                this.visibility = Button.GONE
-                yesButton.visibility = Button.GONE
-            }
-            // Make the button small and adjust margin
-            layoutParams = LinearLayout.LayoutParams(
-                100, // Width
-                100  // Height
-            ).apply {
-                gravity = Gravity.CENTER
-                setMargins(0, 40, 0, 20) // Add some margin above and below the button
-            }
-        }
-
         // Create a button to go back to the main view with a text symbol
         val backButton = Button(this).apply {
             text = "<"
@@ -151,16 +110,14 @@ class MainActivity : ComponentActivity() {
                 100, // Width
                 100  // Height
             ).apply {
-                gravity = Gravity.CENTER
-                setMargins(0, 40, 0, 20) // Add some margin above and below the button
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                setMargins(0, 0, 0, 40) // Add margin at the bottom
             }
         }
 
         // Add views to the detail layout
         detailLayout.apply {
             addView(textView)
-            addView(yesButton)
-            addView(noButton)
             addView(backButton)
         }
 
@@ -199,9 +156,7 @@ class MainActivity : ComponentActivity() {
                                 if (elapsedTime >= DURATION_THRESHOLD) {
                                     vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
                                     isTracking = false // Reset tracking after vibration
-                                    textView.text = "Did you bite your nail?"
-                                    yesButton.visibility = Button.VISIBLE
-                                    noButton.visibility = Button.VISIBLE
+                                    showConfirmationScreen()
                                 }
                             }
                         } else {
@@ -215,6 +170,78 @@ class MainActivity : ComponentActivity() {
                 }
             }, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
+    }
+
+    private fun showConfirmationScreen() {
+        // Create a new layout for the confirmation screen
+        val confirmationLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setBackgroundColor(android.graphics.Color.BLACK) // Set background color to black
+        }
+
+        // Create a TextView to ask the question
+        val questionTextView = TextView(this).apply {
+            text = "Did you bite your nails?"
+            gravity = Gravity.CENTER
+            textSize = 16f
+            setPadding(0, 20, 0, 20) // Add some margin above and below the text
+        }
+
+        // Create a horizontal layout for the buttons
+        val buttonLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+        }
+
+        // Create buttons for user response
+        yesButton = Button(this).apply {
+            text = "✔"
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
+            setTextColor(android.graphics.Color.WHITE) // White text color
+            setOnClickListener {
+                showMainScreen()
+            }
+            // Make the button small and adjust margin
+            layoutParams = LinearLayout.LayoutParams(
+                100, // Width
+                100  // Height
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(20, 0, 20, 0) // Add some margin between the buttons
+            }
+        }
+
+        noButton = Button(this).apply {
+            text = "✘"
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
+            setTextColor(android.graphics.Color.WHITE) // White text color
+            setOnClickListener {
+                showMainScreen()
+            }
+            // Make the button small and adjust margin
+            layoutParams = LinearLayout.LayoutParams(
+                100, // Width
+                100  // Height
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(20, 0, 20, 0) // Add some margin between the buttons
+            }
+        }
+
+        // Add buttons to the horizontal layout
+        buttonLayout.apply {
+            addView(yesButton)
+            addView(noButton)
+        }
+
+        // Add views to the confirmation layout
+        confirmationLayout.apply {
+            addView(questionTextView)
+            addView(buttonLayout)
+        }
+
+        setContentView(confirmationLayout)
     }
 
     private fun showMainScreen() {
