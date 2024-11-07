@@ -1,5 +1,8 @@
 package com.example.my_wear_app
 
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -13,7 +16,6 @@ import android.widget.LinearLayout
 import android.view.Gravity
 import android.os.PowerManager
 import android.view.WindowManager
-import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -30,9 +32,13 @@ class MainActivity : ComponentActivity() {
     private val DURATION_THRESHOLD = 3000 // 3 seconds in milliseconds
     private lateinit var yesButton: Button
     private lateinit var noButton: Button
+    private lateinit var dbHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize database helper
+        dbHelper = DBHelper(this)
 
         // Keep screen on
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -200,6 +206,7 @@ class MainActivity : ComponentActivity() {
             setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
             setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
+                logResponse("Yes")
                 showMainScreen()
             }
             // Make the button small and adjust margin
@@ -217,6 +224,7 @@ class MainActivity : ComponentActivity() {
             setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
             setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
+                logResponse("No")
                 showMainScreen()
             }
             // Make the button small and adjust margin
@@ -242,6 +250,39 @@ class MainActivity : ComponentActivity() {
         }
 
         setContentView(confirmationLayout)
+    }
+
+    private fun logResponse(response: String) {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(DBHelper.COLUMN_TIMESTAMP, System.currentTimeMillis())
+            put(DBHelper.COLUMN_RESPONSE, response)
+        }
+        db.insert(DBHelper.TABLE_NAME, null, values)
+        queryDatabase() // Query the database and log the results
+    }
+
+    private fun queryDatabase() {
+        val db = dbHelper.readableDatabase
+        val cursor: Cursor = db.query(
+            DBHelper.TABLE_NAME,
+            arrayOf(DBHelper.COLUMN_ID, DBHelper.COLUMN_TIMESTAMP, DBHelper.COLUMN_RESPONSE),
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COLUMN_ID))
+                val timestamp = cursor.getLong(cursor.getColumnIndexOrThrow(DBHelper.COLUMN_TIMESTAMP))
+                val response = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COLUMN_RESPONSE))
+                Log.d("DBHelper", "ID: $id, Timestamp: $timestamp, Response: $response")
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
     }
 
     private fun showMainScreen() {

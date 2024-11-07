@@ -16,12 +16,15 @@ The app requires the following permissions:
 - `android.permission.BODY_SENSORS`
 - `android.permission.VIBRATE`
 
-## How to Change the App Name in Android Studio
+## If you want to see the database file directly, you can use the Device File Explorer in Android Studio:
 
-1. Open the `res/values/strings.xml` file.
-2. Locate the `<string name="app_name">Nail Bite Detector</string>` element.
-3. Change the value `Nail Bite Detector` to your desired app name.
-4. Update the `android:label` attribute in the `AndroidManifest.xml` file if necessary.
+1. Open Device File Explorer: In Android Studio, go to View > Tool Windows > Device File Explorer.
+
+2. Navigate to the Database File: In the Device File Explorer, navigate to the directory where your app's data is stored. The path is typically /data/data/com.example.my_wear_app/databases/.
+
+3. Download the Database File: Right-click on the database file (e.g., responses.db) and select Save As to download it to your local machine.
+
+4. Inspect the Database File: Use a SQLite database viewer (e.g., DB Browser for SQLite) to open and inspect the database file.
 
 ### Example
 
