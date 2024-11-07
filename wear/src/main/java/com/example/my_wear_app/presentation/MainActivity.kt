@@ -61,13 +61,13 @@ class MainActivity : ComponentActivity() {
             setOnClickListener {
                 showDetailScreen()
             }
-            // Make the button small
+            // Make the button small and adjust margin
             layoutParams = LinearLayout.LayoutParams(
                 100, // Width
                 100  // Height
             ).apply {
-                gravity = Gravity.CENTER
-                setMargins(0, 20, 0, 0) // Add some margin above the button
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                setMargins(0, 0, 0, 40) // Add margin at the bottom
             }
         }
 
@@ -108,13 +108,13 @@ class MainActivity : ComponentActivity() {
                 this.visibility = Button.GONE
                 noButton.visibility = Button.GONE
             }
-            // Make the button small
+            // Make the button small and adjust margin
             layoutParams = LinearLayout.LayoutParams(
                 100, // Width
                 100  // Height
             ).apply {
                 gravity = Gravity.CENTER
-                setMargins(0, 20, 0, 0) // Add some margin above the button
+                setMargins(0, 40, 0, 20) // Add some margin above and below the button
             }
         }
 
@@ -128,13 +128,13 @@ class MainActivity : ComponentActivity() {
                 this.visibility = Button.GONE
                 yesButton.visibility = Button.GONE
             }
-            // Make the button small
+            // Make the button small and adjust margin
             layoutParams = LinearLayout.LayoutParams(
                 100, // Width
                 100  // Height
             ).apply {
                 gravity = Gravity.CENTER
-                setMargins(0, 20, 0, 0) // Add some margin above the button
+                setMargins(0, 40, 0, 20) // Add some margin above and below the button
             }
         }
 
@@ -146,13 +146,13 @@ class MainActivity : ComponentActivity() {
             setOnClickListener {
                 showMainScreen()
             }
-            // Make the button small
+            // Make the button small and adjust margin
             layoutParams = LinearLayout.LayoutParams(
                 100, // Width
                 100  // Height
             ).apply {
                 gravity = Gravity.CENTER
-                setMargins(0, 20, 0, 0) // Add some margin above the button
+                setMargins(0, 40, 0, 20) // Add some margin above and below the button
             }
         }
 
@@ -234,13 +234,13 @@ class MainActivity : ComponentActivity() {
             setOnClickListener {
                 showDetailScreen()
             }
-            // Make the button small
+            // Make the button small and adjust margin
             layoutParams = LinearLayout.LayoutParams(
                 100, // Width
                 100  // Height
             ).apply {
-                gravity = Gravity.CENTER
-                setMargins(0, 20, 0, 0) // Add some margin above the button
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                setMargins(0, 0, 0, 40) // Add margin at the bottom
             }
         }
 
