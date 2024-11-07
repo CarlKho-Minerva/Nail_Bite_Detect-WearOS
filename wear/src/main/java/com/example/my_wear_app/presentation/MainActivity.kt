@@ -108,11 +108,21 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        // Create a button to go back to the main view
+        val backButton = Button(this).apply {
+            text = "Back"
+            setBackgroundResource(android.R.drawable.btn_default_small)
+            setOnClickListener {
+                showMainScreen()
+            }
+        }
+
         // Add views to the detail layout
         detailLayout.apply {
             addView(textView)
             addView(yesButton)
             addView(noButton)
+            addView(backButton)
         }
 
         setContentView(detailLayout)
@@ -166,5 +176,34 @@ class MainActivity : ComponentActivity() {
                 }
             }, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
+    }
+
+    private fun showMainScreen() {
+        // Create a simple TextView to show the main message
+        val mainTextView = TextView(this).apply {
+            text = "You are doing a great job, don't bite your nails."
+            gravity = Gravity.CENTER
+            textSize = 14f // Smaller font size
+        }
+
+        // Create a smaller, circular button to access the detailed accelerometer data screen
+        val detailButton = Button(this).apply {
+            text = "Show Details"
+            setBackgroundResource(android.R.drawable.btn_default_small)
+            setOnClickListener {
+                showDetailScreen()
+            }
+        }
+
+        // Create a layout to hold the TextView and button
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setBackgroundColor(android.graphics.Color.BLACK) // Set background color to black
+            addView(mainTextView)
+            addView(detailButton)
+        }
+
+        setContentView(layout)
     }
 }
