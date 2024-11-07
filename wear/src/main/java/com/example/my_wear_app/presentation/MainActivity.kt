@@ -49,12 +49,13 @@ class MainActivity : ComponentActivity() {
         val mainTextView = TextView(this).apply {
             text = "You are doing a great job, don't bite your nails."
             gravity = Gravity.CENTER
-            textSize = 18f
+            textSize = 14f // Smaller font size
         }
 
-        // Create a button to access the detailed accelerometer data screen
+        // Create a smaller, circular button to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
             text = "Show Details"
+            setBackgroundResource(android.R.drawable.btn_default_small)
             setOnClickListener {
                 showDetailScreen()
             }
