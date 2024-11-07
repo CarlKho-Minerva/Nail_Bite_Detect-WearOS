@@ -78,28 +78,41 @@ class MainActivity : ComponentActivity(), SensorEventListener {
             }
         }
 
-        // Create a horizontal layout for the buttons
-        val buttonLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER
-            addView(yesButton)
-            addView(noButton)
-        }
-
-        // Create a circular layout to hold the buttons
-        val circularLayout = LinearLayout(this).apply {
+        // Create a layout for each button with a circular background
+        val yesButtonLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             background = resources.getDrawable(R.drawable.circular_background, null)
-            addView(buttonLayout)
+            val params = LinearLayout.LayoutParams(200, 200) // 1:1 ratio
+            params.setMargins(16, 16, 16, 16)
+            layoutParams = params
+            addView(yesButton)
         }
 
-        // Create a layout to hold the TextView and circular button layout
+        val noButtonLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            background = resources.getDrawable(R.drawable.circular_background, null)
+            val params = LinearLayout.LayoutParams(200, 200) // 1:1 ratio
+            params.setMargins(16, 16, 16, 16)
+            layoutParams = params
+            addView(noButton)
+        }
+
+        // Create a horizontal layout for the button layouts
+        val buttonLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+            addView(yesButtonLayout)
+            addView(noButtonLayout)
+        }
+
+        // Create a layout to hold the TextView and button layout
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             addView(textView)
-            addView(circularLayout)
+            addView(buttonLayout)
         }
 
         setContentView(layout)
