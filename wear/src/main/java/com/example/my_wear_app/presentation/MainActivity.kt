@@ -56,15 +56,15 @@ class MainActivity : ComponentActivity() {
         // Create a smaller, circular button with a text symbol to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
             text = ">"
-            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
             setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showDetailScreen()
             }
-            // Make the button circular
+            // Make the button small
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                100, // Width
+                100  // Height
             ).apply {
                 gravity = Gravity.CENTER
                 setMargins(0, 20, 0, 0) // Add some margin above the button
@@ -101,35 +101,55 @@ class MainActivity : ComponentActivity() {
         yesButton = Button(this).apply {
             text = "✔"
             visibility = Button.GONE
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
+            setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 textView.text = "Nail bite detected!"
                 this.visibility = Button.GONE
                 noButton.visibility = Button.GONE
+            }
+            // Make the button small
+            layoutParams = LinearLayout.LayoutParams(
+                100, // Width
+                100  // Height
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(0, 20, 0, 0) // Add some margin above the button
             }
         }
 
         noButton = Button(this).apply {
             text = "✘"
             visibility = Button.GONE
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
+            setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 textView.text = "False alarm!"
                 this.visibility = Button.GONE
                 yesButton.visibility = Button.GONE
+            }
+            // Make the button small
+            layoutParams = LinearLayout.LayoutParams(
+                100, // Width
+                100  // Height
+            ).apply {
+                gravity = Gravity.CENTER
+                setMargins(0, 20, 0, 0) // Add some margin above the button
             }
         }
 
         // Create a button to go back to the main view with a text symbol
         val backButton = Button(this).apply {
             text = "<"
-            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
             setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showMainScreen()
             }
-            // Make the button circular
+            // Make the button small
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                100, // Width
+                100  // Height
             ).apply {
                 gravity = Gravity.CENTER
                 setMargins(0, 20, 0, 0) // Add some margin above the button
@@ -209,15 +229,15 @@ class MainActivity : ComponentActivity() {
         // Create a smaller, circular button with a text symbol to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
             text = ">"
-            setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setBackgroundResource(R.drawable.circular_button) // Set background to circular drawable
             setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showDetailScreen()
             }
-            // Make the button circular
+            // Make the button small
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                100, // Width
+                100  // Height
             ).apply {
                 gravity = Gravity.CENTER
                 setMargins(0, 20, 0, 0) // Add some margin above the button
