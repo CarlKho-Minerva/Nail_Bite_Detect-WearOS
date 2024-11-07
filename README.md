@@ -2,6 +2,15 @@
 
 Nail Bite Detector is an Android Wear application that uses the accelerometer to detect specific movements and prompts the user to confirm if they bit their nail.
 
+<div>
+    <a href="https://www.loom.com/share/4efe9b7d489346ceb8cb3cf080895c97">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/4efe9b7d489346ceb8cb3cf080895c97-f3a29fa1e721666f-full-play.gif">
+    </a>
+    <a href="https://www.loom.com/share/4efe9b7d489346ceb8cb3cf080895c97">
+      <p>Nail Biting Intervention with Google Pixel Watch (WearOS) Technology - Watch Video</p>
+    </a>
+  </div>
+
 ## Features
 
 - Detects movement using the accelerometer
@@ -16,7 +25,7 @@ The app requires the following permissions:
 - `android.permission.BODY_SENSORS`
 - `android.permission.VIBRATE`
 
-## If you want to see the database file directly, you can use the Device File Explorer in Android Studio:
+## If you want to see the database file directly, you can use the Device File Explorer in Android Studio
 
 1. Open Device File Explorer: In Android Studio, go to View > Tool Windows > Device File Explorer.
 
