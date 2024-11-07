@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     private val DURATION_THRESHOLD = 3000 // 3 seconds in milliseconds
     private lateinit var yesButton: Button
     private lateinit var noButton: Button
+    private lateinit var logButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity(), SensorEventListener {
 
         // Create a simple TextView to show accelerometer data
         textView = TextView(this).apply {
-            text = "Waiting for movement..."
+            text = "You're not biting your nails. Good job!"
             gravity = Gravity.CENTER
             setTextColor(android.graphics.Color.WHITE) // Set text color to white
         }
@@ -107,12 +108,22 @@ class MainActivity : ComponentActivity(), SensorEventListener {
             addView(noButtonLayout)
         }
 
-        // Create a layout to hold the TextView and button layout
+        // Create a new button for accessing the logging mechanism
+        logButton = Button(this).apply {
+            text = "View Log"
+            setOnClickListener {
+                // Show log data
+                textView.text = "Log data: X, Y, Z values"
+            }
+        }
+
+        // Create a layout to hold the TextView, button layout, and log button
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             addView(textView)
             addView(buttonLayout)
+            addView(logButton)
         }
 
         setContentView(layout)
@@ -173,6 +184,7 @@ class MainActivity : ComponentActivity(), SensorEventListener {
                 }
             } else {
                 isTracking = false // Reset tracking when X goes below threshold
+                textView.text = "You're not biting your nails. Good job!"
             }
         }
     }
