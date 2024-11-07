@@ -18,7 +18,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 
-class MainActivity : ComponentActivity(), SensorEventListener {
+class MainActivity : ComponentActivity() {
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var textView: TextView
@@ -30,16 +30,12 @@ class MainActivity : ComponentActivity(), SensorEventListener {
     private val DURATION_THRESHOLD = 3000 // 3 seconds in milliseconds
     private lateinit var yesButton: Button
     private lateinit var noButton: Button
-    private lateinit var logButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Keep screen on
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
-        // Set background color to black
-        window.decorView.setBackgroundColor(android.graphics.Color.BLACK)
 
         // Initialize wake lock
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -49,24 +45,22 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         )
         wakeLock.acquire()
 
-        // Create a simple TextView to show accelerometer data
-        textView = TextView(this).apply {
-            text = "You're not biting your nails. Good job!"
+        // Create a simple TextView to show the main message
+        val mainTextView = TextView(this).apply {
+            text = "You are doing a great job, don't bite your nails."
             gravity = Gravity.CENTER
-            setTextColor(android.graphics.Color.WHITE) // Set text color to white
+            textSize = 18f
         }
 
-        // Create buttons for user response
-        yesButton = Button(this).apply {
-            text = "✔"
-            visibility = Button.GONE
+        // Create a button to access the detailed accelerometer data screen
+        val detailButton = Button(this).apply {
+            text = "Show Details"
             setOnClickListener {
-                textView.text = "Nail bite detected!"
-                // Handle nail bite detection
-                this.visibility = Button.GONE
-                noButton.visibility = Button.GONE
+                showDetailScreen()
             }
         }
+
+        // Create a layout to hold the TextView and button
 
         noButton = Button(this).apply {
             text = "✘"
@@ -79,51 +73,14 @@ class MainActivity : ComponentActivity(), SensorEventListener {
             }
         }
 
-        // Create a layout for each button with a circular background
-        val yesButtonLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            background = resources.getDrawable(R.drawable.circular_background, null)
-            val params = LinearLayout.LayoutParams(200, 200) // 1:1 ratio
-            params.setMargins(16, 16, 16, 16)
-            layoutParams = params
-            addView(yesButton)
-        }
-
-        val noButtonLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            background = resources.getDrawable(R.drawable.circular_background, null)
-            val params = LinearLayout.LayoutParams(200, 200) // 1:1 ratio
-            params.setMargins(16, 16, 16, 16)
-            layoutParams = params
-            addView(noButton)
-        }
-
-        // Create a horizontal layout for the button layouts
-        val buttonLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER
-            addView(yesButtonLayout)
-            addView(noButtonLayout)
-        }
-
-        // Create a new button for accessing the logging mechanism
-        logButton = Button(this).apply {
-            text = "View Log"
-            setOnClickListener {
-                // Show log data
-                textView.text = "Log data: X, Y, Z values"
-            }
-        }
-
-        // Create a layout to hold the TextView, button layout, and log button
+        // Create a layout to hold the TextView and buttons
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
+            setBackgroundColor(android.graphics.Color.BLACK) // Set background color to black
             addView(textView)
-            addView(buttonLayout)
-            addView(logButton)
+            addView(yesButton)
+            addView(noButton)
         }
 
         setContentView(layout)
@@ -184,7 +141,6 @@ class MainActivity : ComponentActivity(), SensorEventListener {
                 }
             } else {
                 isTracking = false // Reset tracking when X goes below threshold
-                textView.text = "You're not biting your nails. Good job!"
             }
         }
     }
