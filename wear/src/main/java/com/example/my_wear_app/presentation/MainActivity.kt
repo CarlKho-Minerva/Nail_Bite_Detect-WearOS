@@ -37,6 +37,9 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         // Keep screen on
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
+        // Set background color to black
+        window.decorView.setBackgroundColor(android.graphics.Color.BLACK)
+
         // Initialize wake lock
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(
@@ -46,9 +49,11 @@ class MainActivity : ComponentActivity(), SensorEventListener {
         wakeLock.acquire()
 
         // Create a simple TextView to show accelerometer data
-        textView = TextView(this)
-        textView.text = "Waiting for movement..."
-        textView.gravity = Gravity.CENTER
+        textView = TextView(this).apply {
+            text = "Waiting for movement..."
+            gravity = Gravity.CENTER
+            setTextColor(android.graphics.Color.WHITE) // Set text color to white
+        }
 
         // Create buttons for user response
         yesButton = Button(this).apply {
@@ -73,13 +78,28 @@ class MainActivity : ComponentActivity(), SensorEventListener {
             }
         }
 
-        // Create a layout to hold the TextView and buttons
+        // Create a horizontal layout for the buttons
+        val buttonLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+            addView(yesButton)
+            addView(noButton)
+        }
+
+        // Create a circular layout to hold the buttons
+        val circularLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            background = resources.getDrawable(R.drawable.circular_background, null)
+            addView(buttonLayout)
+        }
+
+        // Create a layout to hold the TextView and circular button layout
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             addView(textView)
-            addView(yesButton)
-            addView(noButton)
+            addView(circularLayout)
         }
 
         setContentView(layout)
