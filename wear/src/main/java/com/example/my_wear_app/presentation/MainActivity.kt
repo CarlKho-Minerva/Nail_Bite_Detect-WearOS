@@ -115,13 +115,16 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Add views to the detail layout
-        detailLayout.apply {
+        // Create a layout to hold the TextView and button
+        val detailLayoutContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setBackgroundColor(android.graphics.Color.BLACK) // Set background color to black
             addView(textView)
             addView(backButton)
         }
 
-        setContentView(detailLayout)
+        setContentView(detailLayoutContainer)
 
         // Initialize sensor manager and accelerometer
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
