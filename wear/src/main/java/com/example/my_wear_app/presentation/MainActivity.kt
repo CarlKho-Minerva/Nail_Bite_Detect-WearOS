@@ -47,16 +47,17 @@ class MainActivity : ComponentActivity() {
 
         // Create a simple TextView to show the main message
         val mainTextView = TextView(this).apply {
-            text = "Great job, don't bite your nails."
+            text = "Don't bite your nails."
             gravity = Gravity.CENTER
             textSize = 14f // Smaller font size
             setPadding(0, 0, 0, 20) // Add some margin below the text
         }
 
-        // Create a smaller, circular button with an icon to access the detailed accelerometer data screen
+        // Create a smaller, circular button with a text symbol to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
-            setBackgroundResource(android.R.drawable.ic_menu_info_details) // Use an icon
+            text = ">"
             setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showDetailScreen()
             }
@@ -117,10 +118,11 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Create a button to go back to the main view with an arrow icon
+        // Create a button to go back to the main view with a text symbol
         val backButton = Button(this).apply {
-            setBackgroundResource(android.R.drawable.ic_media_previous) // Use an arrow icon
+            text = "<"
             setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showMainScreen()
             }
@@ -198,16 +200,17 @@ class MainActivity : ComponentActivity() {
     private fun showMainScreen() {
         // Create a simple TextView to show the main message
         val mainTextView = TextView(this).apply {
-            text = "Great job, don't bite your nails."
+            text = "Don't bite your nails."
             gravity = Gravity.CENTER
             textSize = 14f // Smaller font size
             setPadding(0, 0, 0, 20) // Add some margin below the text
         }
 
-        // Create a smaller, circular button with an icon to access the detailed accelerometer data screen
+        // Create a smaller, circular button with a text symbol to access the detailed accelerometer data screen
         val detailButton = Button(this).apply {
-            setBackgroundResource(android.R.drawable.ic_menu_info_details) // Use an icon
+            text = ">"
             setBackgroundColor(android.graphics.Color.DKGRAY) // Dark gray color
+            setTextColor(android.graphics.Color.WHITE) // White text color
             setOnClickListener {
                 showDetailScreen()
             }
